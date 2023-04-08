@@ -7,12 +7,19 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(WebClientResponseException.class)
+    public ResponseEntity<Map<String, String>> handleWebClientException(WebClientResponseException e) {
+        Map<String, String> errorMsg = new HashMap<>();
+        errorMsg.put("error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
+    }
 
     @ExceptionHandler(GameNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFoundException(GameNotFoundException e) {
