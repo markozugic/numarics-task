@@ -1,7 +1,7 @@
-package com.numarics.playerservice.listeners;
+package com.numarics.playerservice.player.listeners;
 
 import com.numarics.playerservice.clients.GameServiceClient;
-import com.numarics.playerservice.events.PlayerDeletedEvent;
+import com.numarics.playerservice.player.events.PlayerDeletedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

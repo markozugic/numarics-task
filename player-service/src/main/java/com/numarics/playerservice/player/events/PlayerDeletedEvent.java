@@ -1,4 +1,4 @@
-package com.numarics.playerservice.events;
+package com.numarics.playerservice.player.events;
 
 import com.numarics.playerservice.player.entities.Player;
 import lombok.Data;

@@ -1,9 +1,9 @@
 package com.numarics.playerservice.player.services;
 
 import com.numarics.playerservice.clients.GameServiceClient;
-import com.numarics.playerservice.events.PlayerDeletedEvent;
 import com.numarics.playerservice.exceptions.custom.PlayerNotFoundException;
 import com.numarics.playerservice.player.entities.Player;
+import com.numarics.playerservice.player.events.PlayerDeletedEvent;
 import com.numarics.playerservice.player.repositories.PlayerRepository;
 import com.numarics.playerservice.player.responses.PlayerResponse;
 import com.numarics.playerservice.register.responses.GameResponse;
