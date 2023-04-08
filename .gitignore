@@ -1,0 +1,22 @@
+# Gradle build files
+.gradle/
+
+# Maven build files
+target/
+pom.xml.lock
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# Other files
+*.log
+*.swp
+.DS_Store
