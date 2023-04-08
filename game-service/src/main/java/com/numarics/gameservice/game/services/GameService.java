@@ -2,7 +2,9 @@ package com.numarics.gameservice.game.services;
 
 import com.numarics.gameservice.exceptions.custom.GameNotFoundException;
 import com.numarics.gameservice.game.entities.Game;
+import com.numarics.gameservice.game.enums.GameStatus;
 import com.numarics.gameservice.game.repositories.GameRepository;
+import com.numarics.gameservice.play.requests.PlayGameRequest;
 import com.numarics.gameservice.play.requests.UpdateGameStatusRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,13 @@ public class GameService {
         Game game = getGame(id);
         game.setStatus(updateGameStatusRequest.status.getGameStatus());
 
+        return gameRepository.save(game);
+    }
+
+    public Game saveNewGame(PlayGameRequest playGameRequest) {
+        Game game = new Game();
+        game.setName(playGameRequest.getGameName());
+        game.setGameStatusEnum(GameStatus.NEW);
         return gameRepository.save(game);
     }
 }
