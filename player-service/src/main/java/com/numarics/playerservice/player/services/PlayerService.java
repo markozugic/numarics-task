@@ -1,28 +1,22 @@
 package com.numarics.playerservice.player.services;
 
-import com.numarics.playerservice.clients.GameServiceClient;
 import com.numarics.playerservice.exceptions.custom.PlayerNotFoundException;
 import com.numarics.playerservice.player.entities.Player;
 import com.numarics.playerservice.player.events.PlayerDeletedEvent;
 import com.numarics.playerservice.player.repositories.PlayerRepository;
 import com.numarics.playerservice.player.responses.PlayerResponse;
-import com.numarics.playerservice.register.responses.GameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
-    private final GameServiceClient gameServiceClient;
-
     private final ApplicationEventPublisher publisher;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository, GameServiceClient gameServiceClient, ApplicationEventPublisher publisher) {
+    public PlayerService(PlayerRepository playerRepository, ApplicationEventPublisher publisher) {
         this.playerRepository = playerRepository;
-        this.gameServiceClient = gameServiceClient;
         this.publisher = publisher;
     }
 
@@ -33,13 +27,11 @@ public class PlayerService {
                         () -> new PlayerNotFoundException("Player with name: " + name + " not found")
                 );
 
-        GameResponse game = fetchGame(player);
-
         return PlayerResponse
                 .builder()
                 .id(player.getId())
                 .name(player.getName())
-                .game(game)
+                .gameId(player.getGameId())
                 .build();
     }
 
@@ -54,20 +46,4 @@ public class PlayerService {
 
         publisher.publishEvent(new PlayerDeletedEvent(this, player));
     }
-
-    private GameResponse fetchGame(Player player) {
-        return gameServiceClient
-                .getClient()
-                .get()
-                .uri(uri -> uri
-                        .path("/game/{id}")
-                        .build(player.getGameId())
-                )
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<GameResponse>() {
-                })
-                .block();
-    }
-
-
 }

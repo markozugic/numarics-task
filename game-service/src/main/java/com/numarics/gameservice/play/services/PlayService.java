@@ -9,6 +9,8 @@ import com.numarics.gameservice.play.responses.PlayerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class PlayService {
     private final PlayerServiceClient playerServiceClient;
@@ -21,6 +23,7 @@ public class PlayService {
         this.gameService = gameService;
     }
 
+    @Transactional
     public PlayGameResponse playGame(PlayGameRequest playGameRequest) {
         Game newGame = gameService.saveNewGame(playGameRequest);
         PlayerResponse player = playerServiceClient.registerUser(playGameRequest.getPlayerName(), newGame.getId());

@@ -32,6 +32,19 @@ public class PlayerServiceClient {
                 .block();
     }
 
+    public PlayerResponse getPlayerByName(String playerName) {
+        return getClient()
+                .get()
+                .uri(uri -> uri
+                        .path("/player/{name}")
+                        .build(playerName)
+                )
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<PlayerResponse>() {
+                })
+                .block();
+    }
+
     private WebClient getClient() {
         return WebClient.builder()
                 .baseUrl(playerServiceUrl)

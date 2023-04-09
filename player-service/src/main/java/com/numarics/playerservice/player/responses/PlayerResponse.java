@@ -1,6 +1,5 @@
 package com.numarics.playerservice.player.responses;
 
-import com.numarics.playerservice.register.responses.GameResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +8,5 @@ import lombok.Data;
 public class PlayerResponse {
     private Long id;
     private String name;
-    private GameResponse game;
+    private Long gameId;
 }
