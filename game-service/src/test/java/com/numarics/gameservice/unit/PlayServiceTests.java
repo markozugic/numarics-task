@@ -31,7 +31,7 @@ public class PlayServiceTests {
 
     @Test
     public void testPlayGame() {
-        // Create test data
+        // Given
         PlayGameRequest playGameRequest = new PlayGameRequest();
         playGameRequest.setGameName("testGame");
         playGameRequest.setPlayerName("testPlayer");
@@ -47,12 +47,11 @@ public class PlayServiceTests {
         playerResponse.setName("testPlayer");
         playerResponse.setGameId(game.getId());
 
+        // When
         when(playerServiceClient.registerUser(any(), any())).thenReturn(playerResponse);
-
-        // Call the method being tested
         PlayGameResponse playGameResponse = playService.playGame(playGameRequest);
 
-        // Verify the response
+        // Then
         assertThat(playGameResponse.getGameName()).isEqualTo("testGame");
         assertThat(playGameResponse.getPlayerName()).isEqualTo("testPlayer");
     }
